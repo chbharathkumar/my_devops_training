@@ -7,6 +7,7 @@ pipeline {
                 script {
                 load "$WORKSPACE/myfile.groovy"
                 echo "${env.test}"
+                def test = "${env.test}"
                 }
             }
         }
@@ -18,7 +19,7 @@ pipeline {
         stage('Test') {
             when {
               
-              environment name: 'env.test', value: 'test' 
+                environment name: ''${test}'', value: 'test' 
              }
             steps {
                 echo 'Testing..'
