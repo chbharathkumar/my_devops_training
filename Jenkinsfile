@@ -2,6 +2,14 @@ pipeline {
     agent any
 
     stages {
+        stage('Loading Pipeline') {
+            steps {
+                script {
+                load "$WORKSPACE/myfile.groovy"
+                echo "${env.test}"
+                }
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building..'
@@ -9,7 +17,7 @@ pipeline {
         }
         stage('Test') {
             when {
-              load "$WORKSPACE/myfile.groovy"
+              
               environment name: 'env.test', value: 'test' 
              }
             steps {
