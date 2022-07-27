@@ -6,12 +6,17 @@ pipeline {
             steps {
                 script {
                 load "$WORKSPACE/myfile.groovy"
-                echo "${env.test}"
+                def build = "${env.build}"
                 def test = "${env.test}"
+                def deploy = "${env.deploy}"
                 }
             }
         }
         stage('Build') {
+            when {
+              
+              expression { env.build == 'yes' }
+             }
             steps {
                 echo 'Building..'
             }
@@ -19,13 +24,17 @@ pipeline {
         stage('Test') {
             when {
               
-                environment name: ''${test}'', value: 'test' 
+              expression { env.test == 'yes' }
              }
             steps {
                 echo 'Testing..'
             }
         }
         stage('Deploy') {
+            when {
+              
+              expression { env.deploy == 'yes' }
+             }
             steps {
                 echo 'Deploying....'
             }
